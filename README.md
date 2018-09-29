@@ -2,6 +2,24 @@
 
 # Labelmaker
 
-Make printable labels for samples using information provided in a spreadsheet.
+Make printable QR code labels for samples using basic information about a project (later: information provided in a spreadsheet).
 
-This repository uses the Python package `qrcode` available here: https://pypi.org/project/qrcode/.
+## Installation
+
+First create a conda environment called `labels` where you will install the package [`qrcode`](https://pypi.org/project/qrcode/).
+
+```
+conda create -n labels jupyter pandas
+source activate labels
+pip install qrcode[pil]
+```
+
+Clone the Labelmaker repository to your computer:
+
+```
+git clone https://github.com/cuttlefishh/labelmaker
+```
+
+## Execution
+
+Run the Jupyter notebook. This will be replaced by a Python script in the near future.
