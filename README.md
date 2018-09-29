@@ -8,7 +8,7 @@ Make printable QR code labels for samples using basic information about a projec
 
 If you don't have Conda installed on your machine, install [Miniconda](https://conda.io/miniconda.html) for your operating system (Python 3.7+ version).
 
-Create a conda environment called `labels` where you will install the package [`qrcode`](https://pypi.org/project/qrcode/).
+Create a conda environment called `labels` where you will install the package [`qrcode`](https://pypi.org/project/qrcode/):
 
 ```
 conda create -n labels pandas click python=3
@@ -16,7 +16,7 @@ source activate labels
 pip install qrcode[pil]
 ```
 
-Clone the Labelmaker repository to your computer.
+Clone the Labelmaker repository to your computer:
 
 ```
 git clone https://github.com/cuttlefishh/labelmaker
@@ -25,7 +25,7 @@ cd labelmaker
 
 ## Execution
 
-Just run the command `generate_labels.py` with the required parameters.
+Just run the command `generate_labels.py` with the required parameters:
 
 ```
 ./generate_labels.py \
