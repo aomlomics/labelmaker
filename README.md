@@ -9,7 +9,7 @@ Make printable QR code labels for samples using basic information about a projec
 First create a conda environment called `labels` where you will install the package [`qrcode`](https://pypi.org/project/qrcode/).
 
 ```
-conda create -n labels jupyter pandas
+conda create -n labels pandas python=3
 source activate labels
 pip install qrcode[pil]
 ```
