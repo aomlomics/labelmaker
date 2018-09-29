@@ -2,7 +2,7 @@
 
 # Labelmaker
 
-Make printable QR code labels for samples using basic information about a project. Currently the sample names iterate from 1 to N, where N is the number of samples. In a future release the sample names can be provided by a spreadsheet.
+Make printable QR code labels for samples using basic information about a project. The sample names iterate from 1 to N, where N is the number of samples; the replicate numbers iterate from 1 to M, where M is the number of replicates per sample. We are planning for a future release where the sample names can be provided in a spreadsheet.
 
 ## Installation
 
