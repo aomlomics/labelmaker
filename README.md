@@ -16,7 +16,7 @@ source activate labels
 pip install qrcode[pil]
 ```
 
-Clone the Labelmaker repository to your computer:
+Clone the Labelmaker repository to your computer.
 
 ```
 git clone https://github.com/cuttlefishh/labelmaker
@@ -25,7 +25,7 @@ cd labelmaker
 
 ## Execution
 
-Just run the command `generate_labels.py` with the required parameters:
+Just run the command `generate_labels.py` with the required parameters.
 
 ```
 ./generate_labels.py \
