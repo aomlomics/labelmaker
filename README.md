@@ -25,12 +25,13 @@ cd labelmaker
 
 ## Execution
 
-Just run the command `generate_labels.py` with the required parameters:
+Just run the command `generate_labels.py` with the required parameters, for example:
 
 ```
 ./generate_labels.py \
   --project MyProject \
   --contact MySurname \
+  --sample_type DNA_0.2um \
   --date 20180929 \
   --num_samples 5 \
   --num_replicates 2 \

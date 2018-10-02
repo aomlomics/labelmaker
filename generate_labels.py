@@ -16,12 +16,12 @@ def create_directory(project):
     if not os.path.exists(newdir):
         os.makedirs(newdir)
 
-def make_label(project, contact, date, sample, replicate, label_width, label_height):
+def make_label(project, contact, sample_type, date, sample, replicate, label_width, label_height):
 
     # generate text code and qr code
-    code = '%s.%s.%s.s%03d.r%02d' % (project, contact, date, sample, replicate)
-    string = 'Project: %s\nContact: %s\nDate: %s\nSample: s%03d\nReplicate: r%02d' % (
-        project, contact, date, sample, replicate)
+    code = '%s_%s_%s_%s_s%03d_r%02d' % (project, contact, sample_type, date, sample, replicate)
+    string = 'Project: %s\nContact: %s\nType: %s\nDate: %s\nSample ID: s%03d\nReplicate: r%02d' % (
+        project, contact, sample_type, date, sample, replicate)
 
     # make qr code
     qr = qrcode.QRCode(
@@ -47,6 +47,8 @@ def make_label(project, contact, date, sample, replicate, label_width, label_hei
               help="Short project name. Must not contain spaces.")
 @click.option('--contact', '-c', required=True, type=str,
               help="Last name of point of contact. Must not contain spaces.")
+@click.option('--sample_type', '-t', required=True, type=str,
+              help="Type of sample (eg DNA.2um). Must not contain spaces.")
 @click.option('--date', '-d', required=True, type=int,
               help="Date as YYYYMMDD or YYYYMM.")
 @click.option('--num_samples', '-s', required=True, type=int,
@@ -58,14 +60,14 @@ def make_label(project, contact, date, sample, replicate, label_width, label_hei
 @click.option('--label_height', '-h', required=True, type=float,
               help="Height of label in inches.")
 
-def main(project, contact, date, num_samples, num_replicates, label_width, label_height):
+def main(project, contact, sample_type, date, num_samples, num_replicates, label_width, label_height):
 
     create_directory(project)
 
     # make labels, iterating over sample numbers and replicates
     for sample in np.arange(num_samples)+1:
         for replicate in np.arange(num_replicates)+1:
-            make_label(project, contact, date, sample, replicate, label_width, label_height)
+            make_label(project, contact, sample_type, date, sample, replicate, label_width, label_height)
 
 if __name__ == "__main__":
     main()
