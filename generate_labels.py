@@ -38,8 +38,8 @@ def make_label(project, contact, sample_type, date, sample, replicate, label_wid
     label = Image.new('RGB', (int(img.height*label_width/label_height), img.height), color='white')
     label.paste(img, (0,0))
     draw = ImageDraw.Draw(label)
-    font = ImageFont.truetype('Monaco.dfont', 24)
-    draw.text((img.height,int(img.height*0.3)), string, (0,0,0), font=font)
+    font = ImageFont.truetype('Monaco.dfont', 32)
+    draw.text(((img.height*0.9), int(img.height*0.25)), string, (0,0,0), font=font)
     label.save('labels_%s/label_s%03d_r%02d.png' % (project, sample, replicate))
 
 @click.command()
