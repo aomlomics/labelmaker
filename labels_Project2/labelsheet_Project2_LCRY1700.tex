@@ -1,0 +1,30 @@
+\documentclass[10pt,notitlepage,letterpaper]{article}
+
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{array}
+
+\addtolength{\hoffset}{-0.37in} 
+\addtolength{\textwidth}{2in}
+\addtolength{\voffset}{-0.8in} 
+\addtolength{\textheight}{2in} 
+
+\def\s{\phantom{xx}}
+\def\w{1.27in}
+\def\h{-0.030in}
+
+\usepackage[pdftex]{hyperref}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\noindent 
+\begin{tabular}[t]{ c @{\s} c @{\s} c @{\s} c @{\s} c }
+
+\includegraphics[width=\w]{label_1_r1} & \includegraphics[width=\w]{label_1_r1} & \includegraphics[width=\w]{label_2_r1} & \includegraphics[width=\w]{label_2_r1} & \includegraphics[width=\w]{label_3_r1} \\
+\includegraphics[width=\w]{label_3_r1} & \includegraphics[width=\w]{label_4_r1} & \includegraphics[width=\w]{label_4_r1} & \includegraphics[width=\w]{label_5_r1} & \includegraphics[width=\w]{label_5_r1} \\
+
+\end{tabular}
+
+\end{document}

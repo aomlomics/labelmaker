@@ -1,0 +1,6 @@
+StationA1
+StationA2
+StationA3
+StationB1
+StationB2
+StationB3
