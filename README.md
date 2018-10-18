@@ -6,10 +6,11 @@ Make printable QR code labels for samples using basic information about a projec
 
 ## Installation
 
-Labelmaker has the following dependencies (installation instructions below):
+Labelmaker requires the following software:
 
 * Conda
 * Tex Live
+* Labelmaker (this repository)
 
 ### Conda
 
@@ -25,7 +26,7 @@ pip install qrcode[pil]
 
 ### TeX Live
 
-Tex Live provides a comprehensive TeX system with binaries for macOS, Linus, and Windows; you can download it [here](https://tug.org/texlive/). We will use `lualatex`. A TeX installation is not absolutely required, but it is required to render a label sheet (PDF) from the individual label image files (PNG).
+Tex Live provides a comprehensive TeX system with binaries for macOS, Linux, and Windows; you can download it [here](https://tug.org/texlive/). We will use `lualatex`. A TeX installation is not absolutely required, but it is required to render a label sheet (PDF) from the individual label image files (PNG).
 
 ### Labelmaker
 
@@ -80,7 +81,7 @@ If no list of sample names is provided, samples are named from 1 to *M*, where *
 
 Labelmaker produces label sheets intended to be printed on Cryo-Babies labels with part number LCRY-1700 ([Diversified Biotech](https://www.divbio.com/product/lcry-1700)). These are 1.28-inch x 0.5-inch labels in a grid of 5 x 17 labels. 
 
-*[Note: Although the physical labels are 1.28 x 0.5 inches, the Python code and TeX code are calibrated for labels with size 1.05 x 0.5 inches or an aspect ratio of 2.1:1 (width:height). By default, `generate_labels.py` will produce PNG files with dimensions 1.05 x 0.5 inches. The user should not change these defaults if they intend to use the commands below to generate label sheets.]*
+*Note: Although the physical labels are 1.28 x 0.5 inches, the Python code and TeX code are calibrated for labels with size 1.05 x 0.5 inches or an aspect ratio of 2.1:1 (width:height). By default, `generate_labels.py` will produce PNG files with dimensions 1.05 x 0.5 inches. The user should not change these defaults if they intend to use the commands below to generate label sheets.*
 
 Run `lualatex` from the directory containing the PNG files and TEX file using the commands below.
 
