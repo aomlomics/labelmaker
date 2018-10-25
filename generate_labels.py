@@ -2,6 +2,8 @@
 
 import click
 import os
+import math
+import time
 import numpy as np
 import pandas as pd
 import qrcode
@@ -9,8 +11,8 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw 
 
-template_head = 'labelsheet_template_LCRY1700_head.tex'
-template_tail = 'labelsheet_template_LCRY1700_tail.tex'
+template_head = 'template_LCRY1700_head.tex'
+template_tail = 'template_LCRY1700_tail.tex'
 template_cols = 5
 
 def create_directory(project):
@@ -26,11 +28,11 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
     # longcode = '%s_%s_%s_%s_%s_r%01d' % (project, contact, sample_type, date, sample, replicate)
     if (num_replicates > 1):
         code = '%s_%s_r%01d' % (project, sample, replicate)
-        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSampleID:%s\nReplicate:r%01d' % (
+        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s\nReplicate:r%01d' % (
             project, contact, sample_type, date, sample, replicate)
     else:
         code = '%s_%s' % (project, sample)
-        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSampleID:%s' % (
+        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s' % (
             project, contact, sample_type, date, sample)
 
     # make qr code
@@ -49,7 +51,7 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
     label.paste(img, (0,0))
     draw = ImageDraw.Draw(label)
     font = ImageFont.truetype('Monaco.dfont', 32)
-    draw.text(((img.height*0.85), int(img.height*0.18)), string, (0,0,0), font=font)
+    draw.text(((img.height * 0.85), int(img.height * 0.18)), string, (0,0,0), font=font)
     if (num_replicates > 1):
         label.save('labels_%s/label_%s_r%01d.png' % (project, sample, replicate))
     else:
@@ -61,15 +63,15 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
 @click.option('--contact', '-c', required=True, type=str,
               help="Last name of point of contact. Must not contain spaces.")
 @click.option('--sample_type', '-t', required=True, type=str,
-              help="Type of sample (eg DNA.2um). Must not contain spaces.")
-@click.option('--date', '-d', required=True, type=int,
-              help="Date as YYMMDD or YYMM.")
+              help="Type of sample (e.g. DNA/0.2um).")
+@click.option('--date', '-d', required=True, type=str,
+              help="Date (e.g. 2018-10-12).")
 @click.option('--sample_list', '-l', required=False, type=click.Path(exists=True),
               help="List of samples. If none is provided, samples will be numbered 1 to num_samples.")
 @click.option('--num_samples', '-s', required=False, type=int, default=5,
-              help="Number of unique samples. [default=5]")
+              help="Number of unique samples; ignored if sample_list provided. [default=5]")
 @click.option('--num_replicates', '-r', required=False, type=int, default=1,
-              help="Number of replicates per sample. [default=1 (no replicates)]")
+              help="Number of replicates per sample. [default=1 (i.e. no replicates)]")
 @click.option('--label_width', '-w', required=False, type=float, default=1.05,
               help="Width of label in inches. 1.05 works for 1.28in labels. [default=1.05]")
 @click.option('--label_height', '-h', required=False, type=float, default=0.5,
@@ -79,37 +81,44 @@ def main(project, contact, sample_type, date, sample_list, num_samples, num_repl
 
     create_directory(project)
 
-    # read sample list or number from 1 to num_samples
+    # read sample list (and count number of samples) or number from 1 to num_samples
     if (sample_list):
         with open(sample_list, 'r') as f:
             samples = [line.rstrip() for line in f.readlines()]
+            num_samples = len(samples)
     else:
-        samples = np.arange(num_samples)+1
+        samples = np.arange(num_samples) + 1
 
     # make labels and latex table, iterating over sample numbers and replicates
-    tex_table = ''
+    tex_table = {}
+    num_sheets = math.ceil(num_samples * num_replicates / 85)
+    for sheet in range(1, num_sheets + 1):
+        tex_table[sheet] = ''
     tex_counter = 0
     for sample in samples:
-        for replicate in np.arange(num_replicates)+1:
+        for replicate in np.arange(num_replicates) + 1:
+            tex_counter += 1
+            this_sheet = math.ceil(tex_counter / 85)
             make_label(project, contact, sample_type, date, sample, replicate, num_replicates, label_width, label_height)
             if (num_replicates > 1):
-                tex_table += '\\includegraphics[width=\\w]{label_%s_r%01d} & ' % (sample, replicate)
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s_r%01d} & ' % (sample, replicate)
             else:
-                tex_table += '\\includegraphics[width=\\w]{label_%s} & ' % sample
-            tex_counter += 1
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s} & ' % sample
             if ((tex_counter % template_cols) == 0):
-                tex_table = tex_table[:-2]
-                tex_table += '\\\\\n'
+                tex_table[this_sheet] = tex_table[this_sheet][:-2]
+                tex_table[this_sheet] += '\\\\[\\h]\n'
 
     # make labelsheet latex file
+    time.sleep(3)
     with open(template_head, 'r') as f:
         head = f.read()
     with open(template_tail, 'r') as f:
         tail = f.read()
-    with open(f'labels_{project}/labelsheet_{project}_LCRY1700.tex', 'w') as t:
-        t.write(head)
-        t.write(tex_table) 
-        t.write(tail)
+    for sheet in range(1, num_sheets + 1):
+        with open(f'labels_{project}/labelsheet{sheet}_{project}_LCRY1700.tex', 'w') as t:
+            t.write(head)
+            t.write(tex_table[sheet])
+            t.write(tail)
 
 if __name__ == "__main__":
     main()

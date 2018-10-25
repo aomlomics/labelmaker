@@ -51,7 +51,7 @@ Run the command `generate_labels.py` with the required parameters. To learn more
 
 #### Option 1: Provide a list of samples
 
-If a list of sample names is provided, those sample names are used. The sample list should be provided as a text file with one sample name per line (no spaces). If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*. If the number of samples including replicates exceeds 85 (the number of labels per sheet), divide the sample list into multiple files.
+If a list of sample names is provided, those sample names are used. The sample list should be provided as a text file with one sample name per line (no spaces). If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*.
 
 ```
 ./generate_labels.py \
@@ -65,7 +65,7 @@ If a list of sample names is provided, those sample names are used. The sample l
 
 #### Option 2: Number sequentially
 
-If no list of sample names is provided, samples are named from 1 to *M*, where *M* is the specified number of samples. If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*. If the number of samples including replicates exceeds 85 (the number of labels per sheet), divide the sample list into multiple files.
+If no list of sample names is provided, samples are named from 1 to *M*, where *M* is the specified number of samples. If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*.
 
 ```
 ./generate_labels.py \
@@ -83,14 +83,16 @@ Labelmaker produces label sheets intended to be printed on Cryo-Babies labels wi
 
 *Note: Although the physical labels are 1.28 x 0.5 inches, the Python code and TeX code are calibrated for labels with size 1.05 x 0.5 inches or an aspect ratio of 2.1:1 (width:height). By default, `generate_labels.py` will produce PNG files with dimensions 1.05 x 0.5 inches. The user should not change these defaults if they intend to use the commands below to generate label sheets.*
 
+Label sheets are generated from TEX files using `lualatex`. If the number of samples including replicates exceeds 85 (the number of labels per sheet), multiple TEX files will be produced and should be converted to PDF.
+
 Run `lualatex` from the directory containing the PNG files and TEX file using the commands below.
 
 ```
 cd /PATH/TO/labelmaker/labels_Project1
-lualatex labelsheet_Project1_LCRY1700.tex
+lualatex labelsheet1_Project1_LCRY1700.tex
 
 cd /PATH/TO/labelmaker/labels_Project2
-lualatex labelsheet_Project2_LCRY1700.tex
+lualatex labelsheet1_Project2_LCRY1700.tex
 ```
 
 ### Step 3: Print
