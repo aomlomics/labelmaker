@@ -81,7 +81,7 @@ If no list of sample names is provided, samples are named from 1 to *M*, where *
 
 Labelmaker produces letter size PDF files intended to be printed on Cryo-Babies label sheets, part number [LCRY-1700](https://www.divbio.com/product/lcry-1700) (Diversified Biotech). These are 1.28-inch x 0.5-inch labels in a grid of 5 x 17 labels.<sup>[1](#footnote1)</sup>
 
-Label sheets are generated from TEX files using `lualatex`. If the number of samples including replicates exceeds 85 (the number of labels per sheet), multiple TeX files will be produced and should be converted to PDF.
+Label sheets are generated from TeX files using `lualatex`. If the number of samples including replicates exceeds 85 (the number of labels per sheet), multiple TeX files will be produced and should be converted to PDF.
 
 Run `lualatex` from the directory containing the PNG files and TeX file using the commands below.
 
