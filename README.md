@@ -6,7 +6,7 @@ Make printable QR code labels for samples using basic information about a projec
 
 ## Installation
 
-Labelmaker requires the following software:
+Labelmaker has been tested on macOS and Linux. It requires the following software:
 
 * Conda
 * TeX Live
