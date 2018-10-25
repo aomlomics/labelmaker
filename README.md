@@ -51,7 +51,7 @@ Run the command `generate_labels.py` with the required parameters. To learn more
 
 #### Option 1: Provide a list of samples
 
-If a list of sample names is provided, those sample names are used, and replicate labels are produced from 1 to *N*, where *N* is the specified number of replicates per sample.
+If a list of sample names is provided, those sample names are used. The sample list should be provided as a text file with one sample name per line (no spaces). If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*.
 
 ```
 ./generate_labels.py \
@@ -60,12 +60,12 @@ If a list of sample names is provided, those sample names are used, and replicat
   --sample_type DNA_0.2um \
   --date 180929 \
   --sample_list sample_list.txt \
-  --num_replicates 2
+  --num_replicates 1
 ```
 
 #### Option 2: Number sequentially
 
-If no list of sample names is provided, samples are named from 1 to *M*, where *M* is the specified number of samples, and replicate labels are produced from 1 to *N*, where *N* is the specified number of replicates per sample.
+If no list of sample names is provided, samples are named from 1 to *M*, where *M* is the specified number of samples. If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*.
 
 ```
 ./generate_labels.py \
@@ -95,4 +95,4 @@ lualatex labelsheet_Project2_LCRY1700.tex
 
 ### Step 3: Print
 
-Now just open up the resulting PDF file (e.g., `labelsheet_Project1_LCRY1700.pdf`) and print on a sheet of Cryo-Babies LCRY-1700 labels.
+Open the resulting PDF file (e.g., `labelsheet_Project1_LCRY1700.pdf`) and print on a sheet of Cryo-Babies LCRY-1700 labels.
