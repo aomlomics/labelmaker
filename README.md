@@ -79,7 +79,7 @@ If no list of sample names is provided, samples are named from 1 to *M*, where *
 
 ### Step 2: Generate label sheet (PDF)
 
-Labelmaker produces letter size PDF files intended to be printed on Cryo-Babies label sheets, part number [LCRY-1700](https://www.divbio.com/product/lcry-1700) (Diversified Biotech). These are 1.28-inch x 0.5-inch labels in a grid of 5 x 17 labels.[^1]
+Labelmaker produces letter size PDF files intended to be printed on Cryo-Babies label sheets, part number [LCRY-1700](https://www.divbio.com/product/lcry-1700) (Diversified Biotech). These are 1.28-inch x 0.5-inch labels in a grid of 5 x 17 labels.<sup>[1](#footnote1)</sup>
 
 Label sheets are generated from TEX files using `lualatex`. If the number of samples including replicates exceeds 85 (the number of labels per sheet), multiple TeX files will be produced and should be converted to PDF.
 
@@ -97,4 +97,4 @@ lualatex labelsheet1_Project2_LCRY1700.tex
 
 Open the resulting PDF file (e.g., `labelsheet1_Project1_LCRY1700.pdf`) and print on a sheet of Cryo-Babies LCRY-1700 labels.
 
-[^1]: Although the physical labels are 1.28 x 0.5 inches, the Python code and TeX code are calibrated for labels with size 1.05 x 0.5 inches or an aspect ratio of 2.1:1 (width:height). By default, `generate_labels.py` will produce PNG files with dimensions 1.05 x 0.5 inches. The user should not change these defaults if they intend to use the commands below to generate label sheets.
+<a name="footnote1">1</a>: Although the physical labels are 1.28 x 0.5 inches, the Python code and TeX code are calibrated for labels with size 1.05 x 0.5 inches or an aspect ratio of 2.1:1 (width:height). By default, `generate_labels.py` will produce PNG files with dimensions 1.05 x 0.5 inches. The user should not change these defaults if they intend to use the commands below to generate label sheets.
