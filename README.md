@@ -51,7 +51,7 @@ Run the command `generate_labels.py` with the required parameters. To learn more
 
 #### Option 1: Provide a list of samples
 
-If a list of sample names is provided, those sample names are used. The sample list should be provided as a text file with one sample name per line (no spaces). If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*.
+If a list of sample names is provided, those sample names are used. The sample list should be provided as a text file with one sample name per line (no spaces). If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*. If the number of samples including replicates exceeds 85 (the number of labels per sheet), divide the sample list into multiple files.
 
 ```
 ./generate_labels.py \
@@ -65,7 +65,7 @@ If a list of sample names is provided, those sample names are used. The sample l
 
 #### Option 2: Number sequentially
 
-If no list of sample names is provided, samples are named from 1 to *M*, where *M* is the specified number of samples. If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*.
+If no list of sample names is provided, samples are named from 1 to *M*, where *M* is the specified number of samples. If the number of replicates *N* is greater than 1 (default), replicate labels are produced from 1 to *N*. If the number of samples including replicates exceeds 85 (the number of labels per sheet), divide the sample list into multiple files.
 
 ```
 ./generate_labels.py \
