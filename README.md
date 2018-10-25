@@ -83,9 +83,9 @@ Labelmaker produces label sheets intended to be printed on Cryo-Babies labels wi
 
 *Note: Although the physical labels are 1.28 x 0.5 inches, the Python code and TeX code are calibrated for labels with size 1.05 x 0.5 inches or an aspect ratio of 2.1:1 (width:height). By default, `generate_labels.py` will produce PNG files with dimensions 1.05 x 0.5 inches. The user should not change these defaults if they intend to use the commands below to generate label sheets.*
 
-Label sheets are generated from TEX files using `lualatex`. If the number of samples including replicates exceeds 85 (the number of labels per sheet), multiple TEX files will be produced and should be converted to PDF.
+Label sheets are generated from TEX files using `lualatex`. If the number of samples including replicates exceeds 85 (the number of labels per sheet), multiple TeX files will be produced and should be converted to PDF.
 
-Run `lualatex` from the directory containing the PNG files and TEX file using the commands below.
+Run `lualatex` from the directory containing the PNG files and TeX file using the commands below.
 
 ```
 cd /PATH/TO/labelmaker/labels_Project1
