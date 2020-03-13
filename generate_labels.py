@@ -25,10 +25,10 @@ def create_directory(project):
 def make_label(project, contact, sample_type, date, sample, replicate, num_replicates, label_width, label_height):
 
     # generate text code and qr code
-    # longcode = '%s_%s_%s_%s_%s_r%01d' % (project, contact, sample_type, date, sample, replicate)
+    # longcode = '%s_%s_%s_%s_%s_%01d' % (project, contact, sample_type, date, sample, replicate)
     if (num_replicates > 1):
-        code = '%s_%s_r%01d' % (project, sample, replicate)
-        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s\nReplicate:r%01d' % (
+        code = '%s_%s_%01d' % (project, sample, replicate)
+        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s\nReplicate:%01d' % (
             project, contact, sample_type, date, sample, replicate)
     else:
         code = '%s_%s' % (project, sample)
@@ -53,7 +53,7 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
     font = ImageFont.truetype('Monaco.dfont', 32)
     draw.text(((img.height * 0.85), int(img.height * 0.18)), string, (0,0,0), font=font)
     if (num_replicates > 1):
-        label.save('labels_%s/label_%s_r%01d.png' % (project, sample, replicate))
+        label.save('labels_%s/label_%s_%01d.png' % (project, sample, replicate))
     else:
         label.save('labels_%s/label_%s.png' % (project, sample))
 
@@ -101,7 +101,7 @@ def main(project, contact, sample_type, date, sample_list, num_samples, num_repl
             this_sheet = math.ceil(tex_counter / 85)
             make_label(project, contact, sample_type, date, sample, replicate, num_replicates, label_width, label_height)
             if (num_replicates > 1):
-                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s_r%01d} & ' % (sample, replicate)
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s_%01d} & ' % (sample, replicate)
             else:
                 tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s} & ' % sample
             if ((tex_counter % template_cols) == 0):
