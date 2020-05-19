@@ -33,7 +33,7 @@ Tex Live provides a comprehensive TeX system with binaries for macOS, Linux, and
 Clone the Labelmaker repository to your computer:
 
 ```
-git clone https://github.com/cuttlefishh/labelmaker
+git clone https://github.com/aomlomics/labelmaker
 cd labelmaker
 ```
 
