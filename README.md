@@ -1,4 +1,4 @@
-<img src="example.png" height=150> <img src="https://images-na.ssl-images-amazon.com/images/I/41%2BEgB57iTL.jpg" height=150>
+<img src="labelmaker_banner.png" alt="labelmaker_banner" width="100%"/>
 
 # Labelmaker
 
@@ -33,7 +33,7 @@ Tex Live provides a comprehensive TeX system with binaries for macOS, Linux, and
 Clone the Labelmaker repository to your computer:
 
 ```
-git clone https://github.com/cuttlefishh/labelmaker
+git clone https://github.com/aomlomics/labelmaker
 cd labelmaker
 ```
 
@@ -96,6 +96,10 @@ lualatex labelsheet1_Project2_LCRY1700.tex
 ### Step 3: Print
 
 Open the resulting PDF file (e.g., `labelsheet1_Project1_LCRY1700.pdf`) and print on a sheet of Cryo-Babies LCRY-1700 labels.
+
+Example:
+
+<img src="example.png" height=150> <img src="https://images-na.ssl-images-amazon.com/images/I/41%2BEgB57iTL.jpg" height=150>
 
 ---
 
