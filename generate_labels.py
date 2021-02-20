@@ -75,7 +75,7 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
 @click.option('--label_width', '-w', required=False, type=float, default=1.05,
               help="Width of label in inches. 1.05 works for 1.28in labels. [default=1.05]")
 @click.option('--label_height', '-h', required=False, type=float, default=0.5,
-              help="Height of label in inches. 0.5 works for 0.5in labels. [default=0.05]")
+              help="Height of label in inches. 0.5 works for 0.5in labels. [default=0.5]")
 
 def main(project, contact, sample_type, date, sample_list, num_samples, num_replicates, label_width, label_height):
 
@@ -87,7 +87,7 @@ def main(project, contact, sample_type, date, sample_list, num_samples, num_repl
             samples = [line.rstrip() for line in f.readlines()]
             num_samples = len(samples)
     else:
-        samples = np.arange(num_samples) + 1
+        samples = [str(x).zfill(int(np.ceil(np.log10(num_samples+1)))) for x in np.arange(num_samples)+1]
 
     # make labels and latex table, iterating over sample numbers and replicates
     tex_table = {}
