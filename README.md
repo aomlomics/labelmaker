@@ -1,4 +1,4 @@
-<img src="labelmaker_banner.png" alt="labelmaker_banner" width="100%"/>
+<img src="banner.png" alt="banner" width="100%"/>
 
 # Labelmaker
 
