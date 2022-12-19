@@ -22,16 +22,16 @@ def create_directory(project):
     if not os.path.exists(newdir):
         os.makedirs(newdir)
 
-def make_label(project, contact, sample_type, date, sample, replicate, num_replicates, label_width, label_height):
+def make_label(project, contact, sample_type, date, sample, replicate, num_replicates, separator, label_width, label_height):
 
     # generate text code and qr code
     # longcode = '%s_%s_%s_%s_%s_%01d' % (project, contact, sample_type, date, sample, replicate)
     if (num_replicates > 1):
-        code = '%s_%s_%01d' % (project, sample, replicate)
+        code = '%s%s%s%s%01d' % (project, separator, sample, separator, replicate)
         string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s\nReplicate:%01d' % (
             project, contact, sample_type, date, sample, replicate)
     else:
-        code = '%s_%s' % (project, sample)
+        code = '%s%s%s' % (project, separator, sample)
         string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s' % (
             project, contact, sample_type, date, sample)
 
@@ -53,9 +53,9 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
     font = ImageFont.truetype('Monaco.dfont', 32)
     draw.text(((img.height * 0.85), int(img.height * 0.18)), string, (0,0,0), font=font)
     if (num_replicates > 1):
-        label.save('labels_%s/label_%s_%01d.png' % (project, sample, replicate))
+        label.save('labels_%s/label%s%s%s%01d.png' % (project, separator, sample, separator, replicate))
     else:
-        label.save('labels_%s/label_%s.png' % (project, sample))
+        label.save('labels_%s/label%s%s.png' % (project, separator, sample))
 
 @click.command()
 @click.option('--project', '-p', required=True, type=str,
@@ -72,12 +72,14 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
               help="Number of unique samples; ignored if sample_list provided. [default=5]")
 @click.option('--num_replicates', '-r', required=False, type=int, default=1,
               help="Number of replicates per sample. [default=1 (i.e. no replicates)]")
+@click.option('--separator', '-e', required=False, type=str, default='-',
+              help="Character separating project and sample names. [default='-']")
 @click.option('--label_width', '-w', required=False, type=float, default=1.05,
               help="Width of label in inches. 1.05 works for 1.28in labels. [default=1.05]")
 @click.option('--label_height', '-h', required=False, type=float, default=0.5,
               help="Height of label in inches. 0.5 works for 0.5in labels. [default=0.5]")
 
-def main(project, contact, sample_type, date, sample_list, num_samples, num_replicates, label_width, label_height):
+def main(project, contact, sample_type, date, sample_list, num_samples, num_replicates, separator, label_width, label_height):
 
     create_directory(project)
 
@@ -99,11 +101,11 @@ def main(project, contact, sample_type, date, sample_list, num_samples, num_repl
         for replicate in np.arange(num_replicates) + 1:
             tex_counter += 1
             this_sheet = math.ceil(tex_counter / 85)
-            make_label(project, contact, sample_type, date, sample, replicate, num_replicates, label_width, label_height)
+            make_label(project, contact, sample_type, date, sample, replicate, num_replicates, separator, label_width, label_height)
             if (num_replicates > 1):
-                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s_%01d} & ' % (sample, replicate)
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label%s%s%s%01d} & ' % (separator, sample, separator, replicate)
             else:
-                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s} & ' % sample
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label%s%s} & ' % (separator, sample)
             if ((tex_counter % template_cols) == 0):
                 tex_table[this_sheet] = tex_table[this_sheet][:-2]
                 tex_table[this_sheet] += '\\\\[\\h]\n'
