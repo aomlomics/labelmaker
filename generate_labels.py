@@ -22,18 +22,17 @@ def create_directory(project):
     if not os.path.exists(newdir):
         os.makedirs(newdir)
 
-def make_label(project, contact, sample_type, date, sample, replicate, num_replicates, separator, label_width, label_height):
+def make_label(project, contact, date, sample, replicate, num_replicates, separator, label_width, label_height):
 
     # generate text code and qr code
-    # longcode = '%s_%s_%s_%s_%s_%01d' % (project, contact, sample_type, date, sample, replicate)
     if (num_replicates > 1):
         code = '%s%s%s%s%01d' % (project, separator, sample, separator, replicate)
-        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s\nReplicate:%01d' % (
-            project, contact, sample_type, date, sample, replicate)
+        string = '\nProject:%s\nContact:%s\nDate:%s\nSample:%s\nReplicate:%01d' % (
+            project, contact, date, sample, replicate)
     else:
         code = '%s%s%s' % (project, separator, sample)
-        string = 'Project:%s\nContact:%s\nType:%s\nDate:%s\nSample:%s' % (
-            project, contact, sample_type, date, sample)
+        string = '\nProject:%s\nContact:%s\nDate:%s\nSample:%s' % (
+            project, contact, date, sample)
 
     # make qr code
     qr = qrcode.QRCode(
@@ -50,20 +49,18 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
     label = Image.new('RGB', (int(img.height*label_width/label_height), img.height), color='white')
     label.paste(img, (0,0))
     draw = ImageDraw.Draw(label)
-    font = ImageFont.truetype('Monaco.dfont', 32)
-    draw.text(((img.height * 0.85), int(img.height * 0.18)), string, (0,0,0), font=font)
+    font = ImageFont.truetype('Verdana.ttf', 36)
+    draw.text(((img.height * 0.75), int(img.height * 0.165)), string, (0,0,0), font=font)
     if (num_replicates > 1):
-        label.save('labels_%s/label%s%s%s%01d.png' % (project, separator, sample, separator, replicate))
+        label.save('labels_%s/label_%s_%01d.png' % (project, sample, replicate))
     else:
-        label.save('labels_%s/label%s%s.png' % (project, separator, sample))
+        label.save('labels_%s/label_%s.png' % (project, sample))
 
 @click.command()
 @click.option('--project', '-p', required=True, type=str,
-              help="Short project name. Must not contain spaces.")
+              help="Short project name, 14 characters or less, no spaces.")
 @click.option('--contact', '-c', required=True, type=str,
-              help="Last name of point of contact. Must not contain spaces.")
-@click.option('--sample_type', '-t', required=True, type=str,
-              help="Type of sample (e.g. DNA/0.2um).")
+              help="Name of point of contact, 14 characters or less.")
 @click.option('--date', '-d', required=True, type=str,
               help="Date (e.g. 2018-10-12).")
 @click.option('--sample_list', '-l', required=False, type=click.Path(exists=True),
@@ -79,7 +76,7 @@ def make_label(project, contact, sample_type, date, sample, replicate, num_repli
 @click.option('--label_height', '-h', required=False, type=float, default=0.5,
               help="Height of label in inches. 0.5 works for 0.5in labels. [default=0.5]")
 
-def main(project, contact, sample_type, date, sample_list, num_samples, num_replicates, separator, label_width, label_height):
+def main(project, contact, date, sample_list, num_samples, num_replicates, separator, label_width, label_height):
 
     create_directory(project)
 
@@ -101,11 +98,11 @@ def main(project, contact, sample_type, date, sample_list, num_samples, num_repl
         for replicate in np.arange(num_replicates) + 1:
             tex_counter += 1
             this_sheet = math.ceil(tex_counter / 85)
-            make_label(project, contact, sample_type, date, sample, replicate, num_replicates, separator, label_width, label_height)
+            make_label(project, contact, date, sample, replicate, num_replicates, separator, label_width, label_height)
             if (num_replicates > 1):
-                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label%s%s%s%01d} & ' % (separator, sample, separator, replicate)
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s_%01d} & ' % (sample, replicate)
             else:
-                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label%s%s} & ' % (separator, sample)
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s} & ' % sample
             if ((tex_counter % template_cols) == 0):
                 tex_table[this_sheet] = tex_table[this_sheet][:-2]
                 tex_table[this_sheet] += '\\\\[\\h]\n'
