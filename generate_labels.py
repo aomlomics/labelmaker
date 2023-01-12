@@ -26,9 +26,9 @@ def make_label(project, contact, date, sample, replicate, num_replicates, separa
 
     # generate text code and qr code
     if (num_replicates > 1):
-        code = '%s%s%s%s%01d' % (project, separator, sample, separator, replicate)
-        string = '\nProject:%s\nContact:%s\nDate:%s\nSample:%s\nReplicate:%01d' % (
-            project, contact, date, sample, replicate)
+        code = '%s%s%s%s%s' % (project, separator, sample, separator, chr(ord('@')+replicate))
+        string = '\nProject:%s\nContact:%s\nDate:%s\nSample:%s%s%s' % (
+            project, contact, date, sample, separator, chr(ord('@')+replicate))
     else:
         code = '%s%s%s' % (project, separator, sample)
         string = '\nProject:%s\nContact:%s\nDate:%s\nSample:%s' % (
@@ -52,7 +52,7 @@ def make_label(project, contact, date, sample, replicate, num_replicates, separa
     font = ImageFont.truetype('Verdana.ttf', 36)
     draw.text(((img.height * 0.75), int(img.height * 0.165)), string, (0,0,0), font=font)
     if (num_replicates > 1):
-        label.save('labels_%s/label_%s_%01d.png' % (project, sample, replicate))
+        label.save('labels_%s/label_%s_%s.png' % (project, sample, chr(ord('@')+replicate)))
     else:
         label.save('labels_%s/label_%s.png' % (project, sample))
 
@@ -100,7 +100,7 @@ def main(project, contact, date, sample_list, num_samples, num_replicates, separ
             this_sheet = math.ceil(tex_counter / 85)
             make_label(project, contact, date, sample, replicate, num_replicates, separator, label_width, label_height)
             if (num_replicates > 1):
-                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s_%01d} & ' % (sample, replicate)
+                tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s_%s} & ' % (sample, chr(ord('@')+replicate))
             else:
                 tex_table[this_sheet] += '\\includegraphics[width=\\w]{label_%s} & ' % sample
             if ((tex_counter % template_cols) == 0):
