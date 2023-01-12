@@ -55,12 +55,12 @@ If a list of sample names is provided, those sample names are used. The sample l
 
 ```
 ./generate_labels.py \
-  --project Project1 \
+  --project ProjectX \
   --contact MySurname \
-  --sample_type DNA_0.2um \
   --date 180929 \
   --sample_list sample_list.txt \
-  --num_replicates 1
+  --num_replicates 1 \
+  --separator '_'
 ```
 
 #### Option 2: Number sequentially
@@ -69,10 +69,9 @@ If no list of sample names is provided, samples are named from 1 to *M*, where *
 
 ```
 ./generate_labels.py \
-  --project Project2 \
-  --contact MySurname \
-  --sample_type DNA_0.2um \
-  --date 180929 \
+  --project Challenger1 \
+  --contact Thomson \
+  --date 1872–1876 \
   --num_samples 5 \
   --num_replicates 2
 ```
