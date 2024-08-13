@@ -26,6 +26,7 @@ RUN git clone https://github.com/aomlomics/labelmaker
 # Install lualatex
 RUN sh -c "echo -e 'LANG=en_US.UTF-8\nLC_ALL=en_US.UTF-8'" && \
   apt-get -y install texlive-latex-base
+  apt-get -y install texlive-latex-extra
 
 # Default to labelmaker directory when entering container
 WORKDIR "/labelmaker"
