@@ -6,13 +6,15 @@ Make printable QR code labels for samples using basic information about a projec
 
 ## Installation
 
+### Option 1: Native install
+
 Labelmaker has been tested on macOS and Linux. It requires the following software:
 
 * Conda
 * TeX Live
 * Labelmaker (this repository)
 
-### Conda
+#### Conda
 
 If you don't have Conda installed on your machine, install [Miniconda](https://conda.io/miniconda.html) for your operating system (Python 3.7+ version).
 
@@ -24,11 +26,11 @@ source activate labels
 pip install qrcode[pil]
 ```
 
-### TeX Live
+#### TeX Live
 
 Tex Live provides a comprehensive TeX system with binaries for macOS, Linux, and Windows; you can download it [here](https://tug.org/texlive/). We will use `lualatex`. A TeX installation is not absolutely required, but it is required to render a label sheet (PDF) from the individual label image files (PNG).
 
-### Labelmaker
+#### Labelmaker
 
 Clone the Labelmaker repository to your computer:
 
@@ -36,6 +38,28 @@ Clone the Labelmaker repository to your computer:
 git clone https://github.com/aomlomics/labelmaker
 cd labelmaker
 ```
+
+### Option 2: Docker container
+
+To run Labelmaker inside a Docker container:
+
+1. Install Docker Desktop (Mac, Windows, or Linux) from [Docker.com](https://docs.docker.com/get-docker/).
+2. Open Docker app.
+3. Download the Docker image from [DockerHub](https://hub.docker.com/r/aomlomics/labelmaker) (command below).
+4. Run the Docker image (command below).
+
+```bash
+docker pull aomlomics/labelmaker
+docker run -v $HOME:/data -it aomlomics/labelmaker
+```
+
+If installing on a Mac with an Apple Silicon chip, run the Docker image with the `--platform linux/amd64` command. It will take a few minutes for the image to load the first time it is run.
+
+```bash
+docker run --platform linux/amd64 -v $HOME:/data -it aomlomics/labelmaker
+```
+
+The `-v` (volume) flag above allows you to mount a local file system volume (in this case your home directory) to read/write from your container. Note that symbolic links in a mounted volume will not work.
 
 ## Execution
 
